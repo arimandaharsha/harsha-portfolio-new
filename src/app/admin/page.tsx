@@ -67,7 +67,7 @@ const PostItem = styled.div`
 `;
 
 export default function AdminPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<unknown>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
@@ -77,7 +77,7 @@ export default function AdminPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    const session = supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null);
       setLoading(false);
     });
@@ -92,18 +92,17 @@ export default function AdminPage() {
     setPosts(data || []);
   }
 
-  async function handleLogin(e: any) {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
-    setLoading(true);
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const email = (e.target as HTMLFormElement).email.value;
+    const password = (e.target as HTMLFormElement).password.value;
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) setError(error.message);
     setLoading(false);
   }
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
     setError('');
@@ -136,15 +135,15 @@ export default function AdminPage() {
       <Title>Publish New Blog Post</Title>
       {error && <ErrorMsg>{error}</ErrorMsg>}
       <Form onSubmit={handleSubmit}>
-        <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Title" required />
-        <Input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} placeholder="Slug (unique, e.g. my-first-post)" required />
-        <Input value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} placeholder="Excerpt" required />
-        <TextArea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} placeholder="Content (HTML or Markdown)" required />
-        <Input value={form.cover_image} onChange={e => setForm(f => ({ ...f, cover_image: e.target.value }))} placeholder="Cover Image URL (optional)" />
-        <Input value={form.meta_title} onChange={e => setForm(f => ({ ...f, meta_title: e.target.value }))} placeholder="Meta Title (SEO)" />
-        <Input value={form.meta_description} onChange={e => setForm(f => ({ ...f, meta_description: e.target.value }))} placeholder="Meta Description (SEO)" />
-        <Input value={form.meta_keywords} onChange={e => setForm(f => ({ ...f, meta_keywords: e.target.value }))} placeholder="Meta Keywords (comma separated)" />
-        <Input value={form.author} onChange={e => setForm(f => ({ ...f, author: e.target.value }))} placeholder="Author" required />
+        <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: (e.target as HTMLInputElement).value }))} placeholder="Title" required />
+        <Input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: (e.target as HTMLInputElement).value }))} placeholder="Slug (unique, e.g. my-first-post)" required />
+        <Input value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: (e.target as HTMLInputElement).value }))} placeholder="Excerpt" required />
+        <TextArea value={form.content} onChange={e => setForm(f => ({ ...f, content: (e.target as HTMLTextAreaElement).value }))} placeholder="Content (HTML or Markdown)" required />
+        <Input value={form.cover_image} onChange={e => setForm(f => ({ ...f, cover_image: (e.target as HTMLInputElement).value }))} placeholder="Cover Image URL (optional)" />
+        <Input value={form.meta_title} onChange={e => setForm(f => ({ ...f, meta_title: (e.target as HTMLInputElement).value }))} placeholder="Meta Title (SEO)" />
+        <Input value={form.meta_description} onChange={e => setForm(f => ({ ...f, meta_description: (e.target as HTMLInputElement).value }))} placeholder="Meta Description (SEO)" />
+        <Input value={form.meta_keywords} onChange={e => setForm(f => ({ ...f, meta_keywords: (e.target as HTMLInputElement).value }))} placeholder="Meta Keywords (comma separated)" />
+        <Input value={form.author} onChange={e => setForm(f => ({ ...f, author: (e.target as HTMLInputElement).value }))} placeholder="Author" required />
         <Button type="submit" disabled={submitting}>{submitting ? 'Publishing...' : 'Publish'}</Button>
       </Form>
       <Title>Existing Blog Posts</Title>

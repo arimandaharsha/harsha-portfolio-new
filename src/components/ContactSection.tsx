@@ -82,7 +82,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+          I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your visions.
         </Description>
         <ContactButton
           href="mailto:your.email@example.com"

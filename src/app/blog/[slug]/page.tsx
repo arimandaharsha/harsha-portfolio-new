@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabaseClient';
 import { BlogPost } from '@/types/blog';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import styled from 'styled-components';
 
 const PostWrap = styled.main`

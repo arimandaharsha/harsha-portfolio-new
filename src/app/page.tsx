@@ -2,7 +2,7 @@
 
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaDownload, FaArrowRight, FaBriefcase, FaCode, FaBrain, FaTools, FaEnvelopeOpenText } from 'react-icons/fa';
+import { FaDownload, FaArrowRight, FaBrain, FaCode, FaEnvelopeOpenText } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
 // Add keyframes for blinking and scaling animation
@@ -91,31 +91,6 @@ const ContactBlock = styled(motion.div)`
   @media (max-width: 600px) {
     font-size: 0.98rem;
     line-height: 1.5;
-  }
-`;
-
-const Socials = styled.div`
-  display: flex;
-  gap: 24px;
-  margin-top: 10px;
-`;
-
-const SocialIcon = styled(motion.a)`
-  color: #fff;
-  font-size: 1.7rem;
-  opacity: 0.7;
-  border: 1.5px solid #222;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s, border 0.2s, background 0.2s;
-  &:hover {
-    opacity: 1;
-    border: 1.5px solid #fff;
-    background: #111;
   }
 `;
 
@@ -509,123 +484,6 @@ const BigIcon = styled(FaEnvelopeOpenText)`
   }
 `;
 
-const ContactSection = styled(Section)`
-  background: #000;
-`;
-
-const ContactGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-top: 48px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ContactInfo = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;
-
-const ContactItem = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  color: #fff;
-`;
-
-const ContactIcon = styled.div`
-  font-size: 1.5rem;
-  color: #fff;
-  opacity: 0.8;
-`;
-
-const ContactText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const ContactLabel = styled.span`
-  font-size: 0.9rem;
-  color: #999;
-`;
-
-const ContactValue = styled.span`
-  font-size: 1.1rem;
-  color: #fff;
-`;
-
-const ContactForm = styled(motion.form)`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const Label = styled.label`
-  font-size: 0.9rem;
-  color: #999;
-`;
-
-const Input = styled.input`
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: #fff;
-  font-size: 1rem;
-  transition: border 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: #fff;
-  }
-`;
-
-const TextArea = styled.textarea`
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: #fff;
-  font-size: 1rem;
-  min-height: 120px;
-  resize: vertical;
-  transition: border 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: #fff;
-  }
-`;
-
-const SubmitButton = styled(motion.button)`
-  background: #000;
-  color: #fff;
-  border: 1.5px solid #fff;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  align-self: flex-start;
-
-  &:hover {
-    background: #fff;
-    color: #000;
-  }
-`;
-
 const ResearchSection = styled(Section)`
   background: #000;
 `;
@@ -727,7 +585,7 @@ export default function Home() {
       setBadgeIdx((prev) => (prev + 1) % badgeTitles.length);
     }, 2200);
     return () => clearInterval(interval);
-  }, []);
+  }, [badgeTitles.length]);
 
   return (
     <>
@@ -1130,9 +988,9 @@ export default function Home() {
         >
           <ContactLeft>
             <ContactHand>👋</ContactHand>
-            <ContactHeading>Let's Work Together?</ContactHeading>
+            <ContactHeading>Let&apos;s Work Together?</ContactHeading>
             <ContactSub>
-            You're just one step away from your next great teammate. I'm open to work and eager to get started!
+              You&apos;re just one step away from your next great teammate. I&apos;m open to work and eager to get started!
             </ContactSub>
             <ContactActions>
               <ContactBtn
