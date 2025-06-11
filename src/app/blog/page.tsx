@@ -39,9 +39,12 @@ const Divider = styled.div`
 
 const BlogGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: 1fr;
   gap: 32px;
   margin-top: 48px;
+  @media (min-width: 700px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const BlogCard = styled(motion(Link))`
@@ -76,9 +79,28 @@ const BlogExcerpt = styled.p`
 `;
 
 const BlogMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
   color: #888;
   font-size: 0.95rem;
   margin-top: auto;
+`;
+
+const AuthorAvatar = styled.img`
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+  border: 2px solid #222;
+`;
+
+const AuthorName = styled.span`
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-right: 10px;
 `;
 
 const BlogLink = styled.div`
@@ -144,7 +166,9 @@ export default function BlogPage() {
                 <BlogTitle>{post.title}</BlogTitle>
                 <BlogExcerpt>{post.excerpt}</BlogExcerpt>
                 <BlogMeta>
-                  {new Date(post.created_at).toLocaleDateString()} &mdash; {post.author}
+                  <AuthorAvatar src="/harsha-image.jpeg" alt="Harsha Arimanda" />
+                  <AuthorName>{post.author}</AuthorName>
+                  {new Date(post.created_at).toLocaleDateString()}
                 </BlogMeta>
                 <BlogLink>
                   Read Post <FaArrowRight />

@@ -4,6 +4,9 @@ import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaDownload, FaArrowRight, FaBrain, FaCode, FaEnvelopeOpenText } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { supabase } from '@/utils/supabaseClient';
+import { BlogPost } from '@/types/blog';
 
 // Add keyframes for blinking and scaling animation
 const blink = keyframes`
@@ -571,6 +574,90 @@ const StatusText = styled.span`
   letter-spacing: 0.02em;
 `;
 
+// Blog section styles
+const BlogSection = styled(Section)`
+  background: #000;
+  padding: 80px 0 100px 0;
+`;
+const BlogGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 48px;
+  @media (min-width: 700px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+`;
+const BlogCard = styled(motion(Link))`
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 32px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: border 0.2s, transform 0.2s;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid #fff;
+    transform: translateY(-4px);
+  }
+`;
+const BlogTitle = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+`;
+const BlogExcerpt = styled.p`
+  color: #999;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+`;
+const BlogMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #888;
+  font-size: 0.95rem;
+  margin-top: auto;
+`;
+const AuthorAvatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #222;
+`;
+const AuthorName = styled.span`
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.01rem;
+`;
+const BlogButton = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #191970;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 40px auto 0 auto;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 16px 0 rgba(25,25,112,0.10);
+  transition: background 0.2s, color 0.2s;
+  &:hover {
+    background: #6c2bff;
+    color: #fff;
+  }
+`;
+
 export default function Home() {
   // Animated badge loop
   const badgeTitles = [
@@ -586,6 +673,30 @@ export default function Home() {
     }, 2200);
     return () => clearInterval(interval);
   }, [badgeTitles.length]);
+
+  // Blog posts state
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  useEffect(() => {
+    async function fetchPosts() {
+      const { data } = await supabase
+        .from('blogs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      setBlogPosts(data || []);
+    }
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'c') {
+        window.location.href = 'mailto:arimandaharsha@outlook.com';
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -922,6 +1033,44 @@ export default function Home() {
         </Container>
       </SkillsSection>
 
+      {/* Blog Section */}
+      <BlogSection>
+        <Container>
+          <SectionTitle
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            Latest Blog Posts
+          </SectionTitle>
+          <Divider />
+          <BlogGrid>
+            {blogPosts.map((post, i) => (
+              <BlogCard
+                key={post.id}
+                href={`/blog/${post.slug}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 * i }}
+              >
+                <BlogTitle>{post.title}</BlogTitle>
+                <BlogExcerpt>{post.excerpt}</BlogExcerpt>
+                <BlogMeta>
+                  <AuthorAvatar src="/harsha-image.jpeg" alt="Harsha Arimanda" />
+                  <AuthorName>{post.author}</AuthorName>
+                  {new Date(post.created_at).toLocaleDateString()}
+                </BlogMeta>
+              </BlogCard>
+            ))}
+          </BlogGrid>
+          <BlogButton href="/blog">
+            View All Blog Posts <FaArrowRight />
+          </BlogButton>
+        </Container>
+      </BlogSection>
+
       <ResearchSection>
         <Container>
           <SectionTitle
@@ -1001,7 +1150,7 @@ export default function Home() {
                 Get In Touch
               </ContactBtn>
               <OrPress>Or Press</OrPress>
-              <ShortcutChip>S</ShortcutChip>
+              <ShortcutChip>C</ShortcutChip>
             </ContactActions>
           </ContactLeft>
           <ContactRight>
