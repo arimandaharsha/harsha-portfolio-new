@@ -2,7 +2,7 @@
 
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaLinkedin, FaGithub, FaGlobe, FaDownload, FaArrowRight, FaBriefcase, FaCode, FaBrain, FaTools, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFlask, FaEnvelopeOpenText } from 'react-icons/fa';
+import { FaDownload, FaArrowRight, FaBriefcase, FaCode, FaBrain, FaTools, FaEnvelopeOpenText } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
 // Add keyframes for blinking and scaling animation
@@ -36,6 +36,11 @@ const HeroWrap = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 44px;
+  padding: 0 32px;
+  @media (max-width: 600px) {
+    padding: 0 16px;
+    gap: 28px;
+  }
 `;
 
 const Badge = styled(motion.div)`
@@ -46,6 +51,10 @@ const Badge = styled(motion.div)`
   color: #fff;
   opacity: 0.7;
   margin-bottom: 8px;
+  @media (max-width: 600px) {
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+  }
 `;
 
 const Name = styled(motion.h1)`
@@ -55,6 +64,10 @@ const Name = styled(motion.h1)`
   margin: 0 0 12px 0;
   line-height: 1.08;
   letter-spacing: -2px;
+  @media (max-width: 600px) {
+    font-size: 2.1rem;
+    margin-bottom: 8px;
+  }
 `;
 
 const Divider = styled.div`
@@ -62,6 +75,10 @@ const Divider = styled.div`
   height: 2px;
   background: #222;
   margin: 18px 0 18px 0;
+  @media (max-width: 600px) {
+    width: 32px;
+    margin: 12px 0;
+  }
 `;
 
 const ContactBlock = styled(motion.div)`
@@ -71,6 +88,10 @@ const ContactBlock = styled(motion.div)`
   margin-bottom: 8px;
   a { color: #fff; text-decoration: none; border-bottom: 1px solid #222; transition: border 0.2s; }
   a:hover { border-bottom: 1px solid #fff; }
+  @media (max-width: 600px) {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
 `;
 
 const Socials = styled.div`
@@ -117,6 +138,11 @@ const ResumeBtn = styled(motion.a)`
     background: #fff;
     color: #000;
     border: 1.5px solid #fff;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.98rem;
+    padding: 10px 18px;
+    margin-top: 12px;
   }
 `;
 
@@ -346,6 +372,9 @@ const TechChip = styled(motion.span)`
 const ContactCardSection = styled(Section)`
   background: #000;
   padding: 80px 0;
+  @media (max-width: 700px) {
+    padding: 36px 0;
+  }
 `;
 
 const ContactCard = styled(motion.div)`
@@ -364,6 +393,9 @@ const ContactCard = styled(motion.div)`
     flex-direction: column;
     align-items: stretch;
   }
+  @media (max-width: 700px) {
+    border-radius: 18px;
+  }
 `;
 
 const ContactLeft = styled.div`
@@ -372,8 +404,11 @@ const ContactLeft = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 64px 48px;
-  @media (max-width: 600px) {
-    padding: 36px 18px;
+  @media (max-width: 900px) {
+    padding: 48px 32px;
+  }
+  @media (max-width: 700px) {
+    padding: 28px 14px;
   }
 `;
 
@@ -401,6 +436,7 @@ const ContactActions = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
+  flex-wrap: wrap;
 `;
 
 const ContactBtn = styled(motion.a)`
@@ -424,6 +460,9 @@ const OrPress = styled.span`
   color: #bbb;
   font-size: 1.1rem;
   margin-left: 8px;
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const ShortcutChip = styled.span`
@@ -436,6 +475,9 @@ const ShortcutChip = styled.span`
   margin-left: 8px;
   border: 1.5px solid #333;
   letter-spacing: 1px;
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const ContactRight = styled.div`
@@ -449,6 +491,9 @@ const ContactRight = styled.div`
   @media (max-width: 900px) {
     min-height: 180px;
     padding: 32px 0;
+  }
+  @media (max-width: 700px) {
+    display: none;
   }
 `;
 
@@ -644,6 +689,10 @@ const StatusWrap = styled.div`
   align-items: center;
   gap: 12px;
   margin-top: 10px;
+  @media (max-width: 600px) {
+    gap: 8px;
+    margin-top: 6px;
+  }
 `;
 
 const GreenDot = styled.div`

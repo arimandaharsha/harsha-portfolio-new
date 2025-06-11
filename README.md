@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Harshavardhan Reddy Arimanda — Portfolio
 
-## Getting Started
+A minimal, professional, and animated portfolio website for Harshavardhan Reddy Arimanda. Built with Next.js, React, styled-components, and framer-motion, this site showcases expertise in Generative AI, Full Stack Development, and more, with a focus on clean design and smooth user experience.
 
-First, run the development server:
+## 🚀 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This portfolio is designed to impress expert UI designers and recruiters alike. It features:
+- Strictly black and white color palette
+- Large, bold typography and perfect alignment
+- Smooth, continuous animations (framer-motion)
+- Animated hero badge cycling through roles
+- Green glowing "Available for work" status
+- Modern, minimal project and experience sections
+- Skills and technologies as interactive chips
+- Research work and contact call-to-action
+- Fully responsive and accessible
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
+- **Animated Hero Section:** Name, animated badge, status, and resume download
+- **Latest Work:** Minimal project cards with hover and scroll animations
+- **Work Experience:** Timeline-style, clean layout
+- **Skills & Technologies:** All skills as chips, organized by category
+- **Research Work:** Highlighted research with animated bullet points
+- **Contact:** Modern call-to-action card with large icon and shortcut
+- **Framer-Motion Animations:** Smooth transitions throughout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [styled-components](https://styled-components.com/)
+- [framer-motion](https://www.framer.com/motion/)
+- [react-icons](https://react-icons.github.io/react-icons/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏁 Getting Started
 
-## Learn More
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/arimandaharsha/harsha-portfolio.git
+   cd harsha-portfolio
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+4. **Open [http://localhost:3000](http://localhost:3000) to view the site.**
 
-To learn more about Next.js, take a look at the following resources:
+## 🖌️ Customization
+- Update your information in `src/app/page.tsx`.
+- Add or edit projects, experience, skills, and research sections as needed.
+- All styles are in the same file using styled-components for easy editing.
+- To change the color palette, adjust the styled-components theme/colors.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the [MIT License](LICENSE).
