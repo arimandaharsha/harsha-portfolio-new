@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -47,6 +47,16 @@ const BlogGrid = styled.div`
   }
 `;
 
+// Add keyframes for gradient animation
+const borderGradientFlow = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+`;
+
 const BlogCard = styled(motion(Link))`
   background: #111;
   border: 1px solid #222;
@@ -58,9 +68,35 @@ const BlogCard = styled(motion(Link))`
   gap: 16px;
   transition: border 0.2s, transform 0.2s;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+    background-size: 200% 200%;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 2;
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
   &:hover {
-    border: 1px solid #fff;
+    border: 1px solid transparent;
     transform: translateY(-4px);
+  }
+  &:hover::after {
+    opacity: 1;
+    animation: ${borderGradientFlow} 2.5s linear infinite;
   }
 `;
 
@@ -115,6 +151,16 @@ const BlogLink = styled.div`
   border-top: 1px solid #222;
 `;
 
+const GradientTitle = styled.span`
+  background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+`;
+
+export const revalidate = 60;
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,8 +172,9 @@ export default function BlogPage() {
       setError('');
       const { data, error } = await supabase
         .from('blogs')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('id, title, slug, excerpt, author, created_at')
+        .order('created_at', { ascending: false })
+        .range(0, 9); // Fetch 10 posts at a time
       if (error) setError(error.message);
       setPosts(data || []);
       setLoading(false);
@@ -143,7 +190,7 @@ export default function BlogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Blog
+          <GradientTitle>Blog</GradientTitle>
         </SectionTitle>
         <Divider />
         {loading ? (

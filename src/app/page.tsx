@@ -22,6 +22,29 @@ const blink = keyframes`
   }
 `;
 
+// Add keyframes for animated flowing gradient
+const gradientFlow = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
+// Add keyframes for animated gradient for project title
+const projectTitleGradientFlow = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+`;
+
 const BG = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -71,6 +94,16 @@ const Name = styled(motion.h1)`
     font-size: 2.1rem;
     margin-bottom: 8px;
   }
+`;
+
+const GradientName = styled.span`
+  background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: ${gradientFlow} 7s ease-in-out infinite;
 `;
 
 const Divider = styled.div`
@@ -160,12 +193,37 @@ const ProjectCard = styled(motion.a)`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: border 0.2s, transform 0.2s;
+  /* Remove direct transitions for background and box-shadow */
   cursor: pointer;
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+    background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+    box-shadow: 0 0 32px 8px rgba(79,140,255,0.35), 0 0 64px 16px rgba(162,89,255,0.28), 0 0 96px 24px rgba(255,106,136,0.18);
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  /* Ensure content is above the gradient/glow */
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   &:hover {
-    border: 1px solid #fff;
-    transform: translateY(-4px);
+    border-color: transparent;
+    transform: scale(1.045);
   }
 `;
 
@@ -174,6 +232,7 @@ const ProjectTitle = styled.h3`
   font-weight: 700;
   color: #fff;
   margin: 0;
+  transition: color 0.2s;
 `;
 
 const ProjectDescription = styled.p`
@@ -181,6 +240,10 @@ const ProjectDescription = styled.p`
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
+  /* No transition for instant effect */
+  ${ProjectCard}:hover & {
+    color: #fff;
+  }
 `;
 
 const ProjectLink = styled.div`
@@ -341,9 +404,10 @@ const TechChip = styled(motion.span)`
   transition: all 0.2s;
 
   &:hover {
-    background: #333;
-    border-color: #fff;
-    transform: translateY(-2px);
+    background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 0 32px 8px rgba(79,140,255,0.35), 0 0 64px 16px rgba(162,89,255,0.28), 0 0 96px 24px rgba(255,106,136,0.18);
   }
 `;
 
@@ -590,18 +654,42 @@ const BlogGrid = styled.div`
 `;
 const BlogCard = styled(motion(Link))`
   background: #111;
-  border: 1px solid #222;
+  border: 1px solid transparent;
   border-radius: 12px;
   padding: 32px;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: border 0.2s, transform 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    pointer-events: none;
+    background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+    z-index: 2;
+  }
+
   &:hover {
-    border: 1px solid #fff;
+    box-shadow: 0 4px 32px 0 rgba(79,140,255,0.10);
     transform: translateY(-4px);
+  }
+  &:hover::before {
+    opacity: 1;
   }
 `;
 const BlogTitle = styled.h3`
@@ -658,6 +746,14 @@ const BlogButton = styled(Link)`
   }
 `;
 
+const GradientTitle = styled.span`
+  background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+`;
+
 export default function Home() {
   // Animated badge loop
   const badgeTitles = [
@@ -680,22 +776,12 @@ export default function Home() {
     async function fetchPosts() {
       const { data } = await supabase
         .from('blogs')
-        .select('*')
+        .select('id, title, slug, excerpt, author, created_at')
         .order('created_at', { ascending: false })
         .limit(3);
       setBlogPosts(data || []);
     }
     fetchPosts();
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === 'c') {
-        window.location.href = 'mailto:arimandaharsha@outlook.com';
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   return (
@@ -718,7 +804,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
           >
-            Harshavardhan Reddy Arimanda ✌️
+            <GradientName>Harshavardhan Reddy Arimanda</GradientName>
           </Name>
           <Divider />
           <ContactBlock
@@ -727,7 +813,7 @@ export default function Home() {
             transition={{ delay: 0.5, duration: 1, ease: 'easeOut' }}
           >
             Delray Beach, FL<br />
-            <a href="mailto:arimandaharsha@outlook.com">arimandaharsha@outlook.com</a> &nbsp;|&nbsp; +1 561 875 2402<br />
+            <a href="mailto:arimandaharsha@outlook.com">arimandaharsha@outlook.com</a> &nbsp;<br />
             {/* <a href="https://arimandaharsha.me" target="_blank" rel="noopener noreferrer">arimandaharsha.me</a><br /> */}
             <a href="https://linkedin.com/in/arimanda-harsha" target="_blank" rel="noopener noreferrer">linkedin.com/in/arimanda-harsha</a> &nbsp;|&nbsp; <a href="https://github.com/arimandaharsha" target="_blank" rel="noopener noreferrer">github.com/arimandaharsha</a>
           </ContactBlock>
@@ -755,7 +841,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Latest Work
+            <GradientTitle>Latest Work</GradientTitle>
           </SectionTitle>
           
           <ProjectGrid>
@@ -878,7 +964,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Work Experience
+            <GradientTitle>Work Experience</GradientTitle>
           </SectionTitle>
           
           <ExperienceGrid>
@@ -971,7 +1057,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Skills & Technologies
+            <GradientTitle>Skills & Technologies</GradientTitle>
           </SectionTitle>
           
           <SkillsGrid>
@@ -1042,7 +1128,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Latest Blog Posts
+            <GradientTitle>Latest Blog Posts</GradientTitle>
           </SectionTitle>
           <Divider />
           <BlogGrid>
@@ -1079,7 +1165,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Research Work
+            <GradientTitle>Research Work</GradientTitle>
           </SectionTitle>
           
           <ResearchCard
@@ -1149,8 +1235,6 @@ export default function Home() {
               >
                 Get In Touch
               </ContactBtn>
-              <OrPress>Or Press</OrPress>
-              <ShortcutChip>C</ShortcutChip>
             </ContactActions>
           </ContactLeft>
           <ContactRight>

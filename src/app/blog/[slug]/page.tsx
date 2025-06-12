@@ -5,19 +5,12 @@ import { supabase } from '@/utils/supabaseClient';
 import { BlogPost } from '@/types/blog';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelopeOpenText } from 'react-icons/fa';
 
 const PostWrap = styled.main`
   max-width: 720px;
   margin: 0 auto;
   padding: 48px 16px 96px 16px;
   color: #fff;
-`;
-
-const Title = styled.h1`
-  font-size: 2.2rem;
-  font-weight: 900;
-  margin: 0 0 18px 0;
 `;
 
 const Meta = styled.div`
@@ -162,59 +155,6 @@ const ContactBtn = styled(motion.a)`
   }
 `;
 
-const OrPress = styled.span`
-  color: #bbb;
-  font-size: 1.1rem;
-  margin-left: 8px;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const ShortcutChip = styled.span`
-  background: #222;
-  color: #fff;
-  border-radius: 8px;
-  padding: 6px 16px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-left: 8px;
-  border: 1.5px solid #333;
-  letter-spacing: 1px;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const ContactRight = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  position: relative;
-  min-height: 320px;
-  @media (max-width: 900px) {
-    min-height: 180px;
-    padding: 32px 0;
-  }
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const BigIcon = styled(FaEnvelopeOpenText)`
-  font-size: 13vw;
-  min-font-size: 180px;
-  color: #fff;
-  opacity: 0.85;
-  transform: rotate(-18deg);
-  filter: drop-shadow(0 2px 16px #000);
-  @media (max-width: 900px) {
-    font-size: 32vw;
-  }
-`;
-
 export default function BlogPostPage() {
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
@@ -224,7 +164,11 @@ export default function BlogPostPage() {
   useEffect(() => {
     async function fetchPost() {
       setLoading(true);
-      const { data } = await supabase.from('blogs').select('*').eq('slug', slug).single();
+      const { data } = await supabase
+        .from('blogs')
+        .select('id, title, slug, excerpt, author, created_at, content, cover_image')
+        .eq('slug', slug)
+        .single();
       setPost(data as BlogPost | null);
       setLoading(false);
     }
@@ -292,8 +236,6 @@ export default function BlogPostPage() {
               >
                 Get In Touch
               </ContactBtn>
-              <OrPress>Or Press</OrPress>
-              <ShortcutChip>C</ShortcutChip>
             </ContactActions>
           </ContactLeft>
         </ContactCard>
