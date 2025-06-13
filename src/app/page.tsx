@@ -754,6 +754,16 @@ const GradientTitle = styled.span`
   color: transparent;
 `;
 
+// Add this type for homepage previews
+type BlogPostPreview = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  author: string;
+  created_at: string;
+};
+
 export default function Home() {
   // Animated badge loop
   const badgeTitles = [
@@ -771,7 +781,7 @@ export default function Home() {
   }, [badgeTitles.length]);
 
   // Blog posts state
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPostPreview[]>([]);
   useEffect(() => {
     async function fetchPosts() {
       const { data } = await supabase
@@ -804,7 +814,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
           >
-            <GradientName>Harshavardhan Reddy Arimanda</GradientName>
+            <GradientName>Harshavardhan Reddy Arimanda</GradientName> ✌️
           </Name>
           <Divider />
           <ContactBlock

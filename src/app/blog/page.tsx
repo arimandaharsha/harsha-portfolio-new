@@ -5,10 +5,11 @@ import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaDownload, FaBrain, FaCode, FaEnvelopeOpenText, FaEnvelope } from 'react-icons/fa';
 
 const Section = styled.section`
-  padding: 120px 0 80px 0;
+  padding: 40px 0 80px 0;
+  margin-top: 80px;
   background: #000;
   width: 100%;
 `;
@@ -22,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-const SectionTitle = styled(motion.h2)`
+const SectionTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 900;
   color: #fff;
@@ -159,10 +160,115 @@ const GradientTitle = styled.span`
   color: transparent;
 `;
 
-export const revalidate = 60;
+// Add this type for blog list previews
+type BlogPostPreview = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  author: string;
+  created_at: string;
+};
+
+const StickyHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  border-bottom: 1px solid #222;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  @media (max-width: 600px) {
+    height: 56px;
+  }
+`;
+
+const HeaderContent = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  @media (max-width: 600px) {
+    padding: 0 6px;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+
+const HeaderSpacer = styled.div`
+  width: 120px;
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+const HeaderName = styled.h1`
+  flex: 1;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0;
+  color: #fff;
+  letter-spacing: -1px;
+  pointer-events: none;
+  user-select: none;
+  @media (max-width: 600px) {
+    font-size: 1.35rem;
+    margin-top: 0.5rem;
+    text-align: left;
+    flex: initial;
+  }
+`;
+
+const ContactHeaderBtn = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #111;
+  color: #fff;
+  border: 1.5px solid #222;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: none;
+  transition: background 0.18s, box-shadow 0.18s, border 0.18s, transform 0.18s;
+  margin-left: 0;
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    margin-top: 0;
+    position: static;
+    transform: none;
+    right: auto;
+    top: auto;
+  }
+  &:hover {
+    background: #191970;
+    color: #fff;
+    border: 1.5px solid #4f8cff;
+    box-shadow: 0 4px 24px 0 rgba(79,140,255,0.18);
+    @media (max-width: 600px) {
+      transform: scale(1.06);
+    }
+  }
+`;
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<BlogPostPreview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -183,48 +289,59 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <Section>
-      <Container>
-        <SectionTitle
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <GradientTitle>Blog</GradientTitle>
-        </SectionTitle>
-        <Divider />
-        {loading ? (
-          <div style={{ color: '#bbb', textAlign: 'center', marginTop: 64, fontSize: 20 }}>Loading...</div>
-        ) : error ? (
-          <div style={{ color: '#ff5e62', textAlign: 'center', marginTop: 64, fontSize: 20 }}>{error}</div>
-        ) : posts.length === 0 ? (
-          <div style={{ color: '#fff', textAlign: 'center', marginTop: 64, fontSize: 20 }}>No blog posts found.</div>
-        ) : (
-          <BlogGrid>
-            {posts.map((post, i) => (
-              <BlogCard
-                key={post.id}
-                href={`/blog/${post.slug}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.1 * i }}
-              >
-                <BlogTitle>{post.title}</BlogTitle>
-                <BlogExcerpt>{post.excerpt}</BlogExcerpt>
-                <BlogMeta>
-                  <AuthorAvatar src="/harsha-image.jpeg" alt="Harsha Arimanda" />
-                  <AuthorName>{post.author}</AuthorName>
-                  {new Date(post.created_at).toLocaleDateString()}
-                </BlogMeta>
-                <BlogLink>
-                  Read Post <FaArrowRight />
-                </BlogLink>
-              </BlogCard>
-            ))}
-          </BlogGrid>
-        )}
-      </Container>
-    </Section>
+    <>
+      <StickyHeader>
+        <HeaderContent>
+          <HeaderSpacer />
+          <HeaderName>Harsha Arimanda</HeaderName>
+          <ContactHeaderBtn href="mailto:arimandaharsha@outlook.com">
+            <FaEnvelope style={{ fontSize: '1.1em' }} /> Contact
+          </ContactHeaderBtn>
+        </HeaderContent>
+      </StickyHeader>
+      <Section>
+        <Container>
+          <SectionTitle
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <GradientTitle>Blog</GradientTitle>
+          </SectionTitle>
+          <Divider />
+          {loading ? (
+            <div style={{ color: '#bbb', textAlign: 'center', marginTop: 64, fontSize: 20 }}>Loading...</div>
+          ) : error ? (
+            <div style={{ color: '#ff5e62', textAlign: 'center', marginTop: 64, fontSize: 20 }}>{error}</div>
+          ) : posts.length === 0 ? (
+            <div style={{ color: '#fff', textAlign: 'center', marginTop: 64, fontSize: 20 }}>No blog posts found.</div>
+          ) : (
+            <BlogGrid>
+              {posts.map((post, i) => (
+                <BlogCard
+                  key={post.id}
+                  href={`/blog/${post.slug}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.1 * i }}
+                >
+                  <BlogTitle>{post.title}</BlogTitle>
+                  <BlogExcerpt>{post.excerpt}</BlogExcerpt>
+                  <BlogMeta>
+                    <AuthorAvatar src="/harsha-image.jpeg" alt="Harsha Arimanda" />
+                    <AuthorName>{post.author}</AuthorName>
+                    {new Date(post.created_at).toLocaleDateString()}
+                  </BlogMeta>
+                  <BlogLink>
+                    Read Post <FaArrowRight />
+                  </BlogLink>
+                </BlogCard>
+              ))}
+            </BlogGrid>
+          )}
+        </Container>
+      </Section>
+    </>
   );
 } 
