@@ -193,10 +193,10 @@ const ProjectCard = styled(motion.a)`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* Remove direct transitions for background and box-shadow */
   cursor: pointer;
   position: relative;
   z-index: 1;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
 
   &::before {
     content: '';
@@ -206,8 +206,20 @@ const ProjectCard = styled(motion.a)`
     z-index: 0;
     opacity: 0;
     transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+    background: linear-gradient(151deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 50%, rgba(0, 212, 255, 1) 100%);
+    box-shadow: 0 0 32px 8px rgba(0, 212, 255, 0.4), 0 0 64px 16px rgba(9, 9, 121, 0.3), 0 0 96px 24px rgba(2, 0, 36, 0.2);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
     background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
-    box-shadow: 0 0 32px 8px rgba(79,140,255,0.35), 0 0 64px 16px rgba(162,89,255,0.28), 0 0 96px 24px rgba(255,106,136,0.18);
     pointer-events: none;
   }
 
@@ -215,15 +227,20 @@ const ProjectCard = styled(motion.a)`
     opacity: 1;
   }
 
+  &:hover::after {
+    opacity: 0.1;
+  }
+
   /* Ensure content is above the gradient/glow */
   > * {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   &:hover {
     border-color: transparent;
     transform: scale(1.045);
+    background: linear-gradient(151deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 50%, rgba(0, 212, 255, 1) 100%);
   }
 `;
 
@@ -295,16 +312,16 @@ const ExperienceHeader = styled.div`
 `;
 
 const CompanyName = styled.h3`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #999;
   margin: 0;
 `;
 
 const Role = styled.h4`
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #999;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
   margin: 0;
 `;
 
@@ -404,10 +421,10 @@ const TechChip = styled(motion.span)`
   transition: all 0.2s;
 
   &:hover {
-    background: linear-gradient(90deg, #4f8cff, #a259ff, #ff6a88, #ff99ac);
+    background: linear-gradient(151deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 50%, rgba(0, 212, 255, 1) 100%);
     color: #fff;
     border-color: transparent;
-    box-shadow: 0 0 32px 8px rgba(79,140,255,0.35), 0 0 64px 16px rgba(162,89,255,0.28), 0 0 96px 24px rgba(255,106,136,0.18);
+    box-shadow: 0 0 32px 8px rgba(0, 212, 255, 0.4), 0 0 64px 16px rgba(9, 9, 121, 0.3), 0 0 96px 24px rgba(2, 0, 36, 0.2);
   }
 `;
 
@@ -769,7 +786,6 @@ export default function Home() {
   const badgeTitles = [
     'Generative AI Engineer',
     'Full Stack Developer',
-    'Mobile App Developer',
   ];
   const [badgeIdx, setBadgeIdx] = useState(0);
 
@@ -831,15 +847,6 @@ export default function Home() {
             <GreenDot />
             <StatusText>Available for work</StatusText>
           </StatusWrap>
-          <ResumeBtn
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <FaDownload /> Download Resume
-          </ResumeBtn>
         </HeroWrap>
       </BG>
       
@@ -864,9 +871,9 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <ProjectTitle>AI-Powered Portfolio Generator</ProjectTitle>
+              <ProjectTitle>Automated Flutter App Builder</ProjectTitle>
               <ProjectDescription>
-                A generative AI system that creates personalized portfolio websites based on user input and preferences.
+                Fully automated system that generates complete Flutter applications from natural language descriptions.
               </ProjectDescription>
               <ProjectLink>
                 View Project <FaArrowRight />
@@ -882,9 +889,9 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <ProjectTitle>Neural Style Transfer</ProjectTitle>
+              <ProjectTitle>Professional Headshot Generator</ProjectTitle>
               <ProjectDescription>
-                Deep learning model that applies artistic styles to images using convolutional neural networks.
+                Generative AI system that creates personalized professional headshots by fine-tuning an image generation model.
               </ProjectDescription>
               <ProjectLink>
                 View Project <FaArrowRight />
@@ -900,63 +907,9 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <ProjectTitle>Text-to-Image Generation</ProjectTitle>
+              <ProjectTitle>Presentation Generator AI</ProjectTitle>
               <ProjectDescription>
-                Advanced AI system that generates high-quality images from textual descriptions using diffusion models.
-              </ProjectDescription>
-              <ProjectLink>
-                View Project <FaArrowRight />
-              </ProjectLink>
-            </ProjectCard>
-
-            <ProjectCard
-              href="https://github.com/arimandaharsha"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <ProjectTitle>Voice Cloning System</ProjectTitle>
-              <ProjectDescription>
-                Real-time voice synthesis and cloning system using deep learning and neural vocoders.
-              </ProjectDescription>
-              <ProjectLink>
-                View Project <FaArrowRight />
-              </ProjectLink>
-            </ProjectCard>
-
-            <ProjectCard
-              href="https://github.com/arimandaharsha"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <ProjectTitle>3D Scene Generation</ProjectTitle>
-              <ProjectDescription>
-                AI-powered system that generates detailed 3D scenes from text descriptions using neural rendering.
-              </ProjectDescription>
-              <ProjectLink>
-                View Project <FaArrowRight />
-              </ProjectLink>
-            </ProjectCard>
-
-            <ProjectCard
-              href="https://github.com/arimandaharsha"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <ProjectTitle>Code Generation Assistant</ProjectTitle>
-              <ProjectDescription>
-                Advanced code generation and completion system using transformer-based language models.
+                LLM powered generative AI system that generates presentations from text inputs.
               </ProjectDescription>
               <ProjectLink>
                 View Project <FaArrowRight />
@@ -985,21 +938,22 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <ExperienceHeader>
-                <CompanyName>Google</CompanyName>
-                <Role>Senior AI Engineer</Role>
-                <Duration>2022 - Present</Duration>
+                <CompanyName>Self-employed</CompanyName>
+                <Role>Generative AI Engineer</Role>
+                <Duration>Jan 2023 - Jul 2023</Duration>
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Leading the development of next-generation AI models for natural language processing and computer vision. 
-                  Spearheading research in transformer architectures and implementing scalable ML solutions.
+                  Designed and deployed a secure Retrieval Augmented Generation (RAG) chatbot using LLAMA and LangChain to provide instant answers from internal documentation across departments. Integrated enterprise knowledge sources including Confluence, PDF SOPs, and Jira tickets with ChromaDB vector search for semantic retrieval. Reduced employee query resolution time by 60% and improved onboarding efficiency by automating access to tribal knowledge.
                 </Description>
                 <TechStack>
-                  <TechTag>Python</TechTag>
-                  <TechTag>TensorFlow</TechTag>
-                  <TechTag>PyTorch</TechTag>
-                  <TechTag>BERT</TechTag>
-                  <TechTag>GPT</TechTag>
+                  <TechTag>LLAMA</TechTag>
+                  <TechTag>LangChain</TechTag>
+                  <TechTag>RAG</TechTag>
+                  <TechTag>ChromaDB</TechTag>
+                  <TechTag>Vector Search</TechTag>
+                  <TechTag>Confluence</TechTag>
+                  <TechTag>Jira</TechTag>
                 </TechStack>
               </ExperienceContent>
             </ExperienceCard>
@@ -1011,21 +965,22 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <ExperienceHeader>
-                <CompanyName>OpenAI</CompanyName>
-                <Role>AI Research Engineer</Role>
-                <Duration>2020 - 2022</Duration>
+                <CompanyName>Self-employed</CompanyName>
+                <Role>Generative AI Engineer</Role>
+                <Duration>Jan 2023 - Jul 2023</Duration>
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Contributed to the development of large language models and generative AI systems. 
-                  Implemented novel training methodologies and optimization techniques for transformer-based architectures.
+                  Built a GenAI content generation engine that creates brand-aligned social media posts, ad copy, and product descriptions using prompt templates and OpenAI's GPT-4 API. Integrated Canva API and brand style libraries to ensure consistent tone and visuals across marketing channels. Accelerated content production by 400%, allowing marketing teams to launch campaigns faster while maintaining brand consistency.
                 </Description>
                 <TechStack>
-                  <TechTag>Python</TechTag>
-                  <TechTag>PyTorch</TechTag>
-                  <TechTag>CUDA</TechTag>
-                  <TechTag>Transformers</TechTag>
-                  <TechTag>Docker</TechTag>
+                  <TechTag>OpenAI GPT-4</TechTag>
+                  <TechTag>Prompt Engineering</TechTag>
+                  <TechTag>Canva API</TechTag>
+                  <TechTag>Brand Alignment</TechTag>
+                  <TechTag>Content Generation</TechTag>
+                  <TechTag>Social Media</TechTag>
+                  <TechTag>Marketing Automation</TechTag>
                 </TechStack>
               </ExperienceContent>
             </ExperienceCard>
@@ -1037,21 +992,21 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <ExperienceHeader>
-                <CompanyName>DeepMind</CompanyName>
-                <Role>Machine Learning Engineer</Role>
-                <Duration>2018 - 2020</Duration>
+                <CompanyName>Self-employed</CompanyName>
+                <Role>Full Stack Developer</Role>
+                <Duration>Mar 2020 - Jan 2023</Duration>
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Developed reinforcement learning algorithms for complex decision-making systems. 
-                  Implemented and optimized deep learning models for various applications in robotics and game playing.
+                  Designed and developed a full stack appointment scheduling system with real-time slot management, allowing users to book, modify, and cancel appointments via a user-friendly React frontend. Implemented back-end APIs using FastAPI with PostgreSQL for time-slot validation, user authentication, and conflict resolution. Built an admin dashboard with role-based access and automated email notifications using SendGrid API. Optimized performance to handle 10k+ appointments/month with minimal latency.
                 </Description>
                 <TechStack>
-                  <TechTag>Python</TechTag>
-                  <TechTag>TensorFlow</TechTag>
-                  <TechTag>RL</TechTag>
-                  <TechTag>C++</TechTag>
-                  <TechTag>Kubernetes</TechTag>
+                  <TechTag>React</TechTag>
+                  <TechTag>FastAPI</TechTag>
+                  <TechTag>PostgreSQL</TechTag>
+                  <TechTag>FullCalendar</TechTag>
+                  <TechTag>SendGrid API</TechTag>
+                  <TechTag>Authentication</TechTag>
                 </TechStack>
               </ExperienceContent>
             </ExperienceCard>

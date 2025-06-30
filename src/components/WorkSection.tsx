@@ -31,6 +31,15 @@ const ProjectCard = styled(motion.div)`
   overflow: hidden;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 20, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const ProjectImage = styled.div`
