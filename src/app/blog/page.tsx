@@ -1,11 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
-import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaArrowRight, FaDownload, FaBrain, FaCode, FaEnvelopeOpenText, FaEnvelope } from 'react-icons/fa';
+import { FaArrowRight, FaEnvelope } from 'react-icons/fa';
 
 const Section = styled.section`
   padding: 40px 0 80px 0;
@@ -23,7 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(motion.h2)`
   font-size: 2.5rem;
   font-weight: 900;
   color: #fff;

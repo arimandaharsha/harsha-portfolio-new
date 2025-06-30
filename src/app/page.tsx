@@ -2,11 +2,10 @@
 
 import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaDownload, FaArrowRight, FaBrain, FaCode, FaEnvelopeOpenText } from 'react-icons/fa';
+import { FaArrowRight, FaBrain, FaCode, FaEnvelopeOpenText } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/utils/supabaseClient';
-import { BlogPost } from '@/types/blog';
 
 // Add keyframes for blinking and scaling animation
 const blink = keyframes`
@@ -32,16 +31,6 @@ const gradientFlow = keyframes`
   }
   100% {
     background-position: 0% 50%;
-  }
-`;
-
-// Add keyframes for animated gradient for project title
-const projectTitleGradientFlow = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
   }
 `;
 
@@ -127,33 +116,6 @@ const ContactBlock = styled(motion.div)`
   @media (max-width: 600px) {
     font-size: 0.98rem;
     line-height: 1.5;
-  }
-`;
-
-const ResumeBtn = styled(motion.a)`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #000;
-  color: #fff;
-  border: 1.5px solid #fff;
-  border-radius: 10px;
-  padding: 12px 28px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 18px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, border 0.2s;
-  text-decoration: none;
-  &:hover {
-    background: #fff;
-    color: #000;
-    border: 1.5px solid #fff;
-  }
-  @media (max-width: 600px) {
-    font-size: 0.98rem;
-    padding: 10px 18px;
-    margin-top: 12px;
   }
 `;
 
@@ -512,30 +474,6 @@ const ContactBtn = styled(motion.a)`
   &:hover {
     background: #fff;
     color: #000;
-  }
-`;
-
-const OrPress = styled.span`
-  color: #bbb;
-  font-size: 1.1rem;
-  margin-left: 8px;
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-const ShortcutChip = styled.span`
-  background: #222;
-  color: #fff;
-  border-radius: 8px;
-  padding: 6px 16px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-left: 8px;
-  border: 1.5px solid #333;
-  letter-spacing: 1px;
-  @media (max-width: 700px) {
-    display: none;
   }
 `;
 
@@ -971,7 +909,7 @@ export default function Home() {
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Built a GenAI content generation engine that creates brand-aligned social media posts, ad copy, and product descriptions using prompt templates and OpenAI's GPT-4 API. Integrated Canva API and brand style libraries to ensure consistent tone and visuals across marketing channels. Accelerated content production by 400%, allowing marketing teams to launch campaigns faster while maintaining brand consistency.
+                  Built a GenAI content generation engine that creates brand-aligned social media posts, ad copy, and product descriptions using prompt templates and OpenAI&apos;s GPT-4 API. Integrated Canva API and brand style libraries to ensure consistent tone and visuals across marketing channels. Accelerated content production by 400%, allowing marketing teams to launch campaigns faster while maintaining brand consistency.
                 </Description>
                 <TechStack>
                   <TechTag>OpenAI GPT-4</TechTag>

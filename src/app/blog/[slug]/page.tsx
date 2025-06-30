@@ -254,14 +254,6 @@ const ContactHeaderBtn = styled.a`
   }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 64px;
-  letter-spacing: -1px;
-`;
-
 export default function BlogPostPage() {
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
