@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabaseClient';
+import Link from 'next/link';
 import { BlogPost } from '@/types/blog';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
@@ -33,11 +34,16 @@ const AuthorAvatar = styled.img`
   border: 2px solid #222;
 `;
 
-const AuthorName = styled.span`
+const AuthorName = styled(Link)`
   color: #fff;
   font-weight: 600;
   font-size: 1.05rem;
   margin-right: 10px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  &:hover {
+    color: #6c2bff;
+  }
 `;
 
 const GlowingCard = styled.div`
@@ -67,7 +73,7 @@ const Content = styled.div`
   margin-top: 12px;
   word-break: break-word;
   & h2, & h3, & h4 { color: #fff; margin-top: 2.2em; }
-  & a { color: #7fffa7; text-decoration: underline; }
+  & a { color: #6c2bff; text-decoration: underline; }
   & pre, & code { background: #18181c; color: #fff; border-radius: 6px; padding: 2px 6px; }
 `;
 
@@ -208,8 +214,15 @@ const HeaderName = styled.h1`
   margin: 0;
   color: #fff;
   letter-spacing: -1px;
-  pointer-events: none;
   user-select: none;
+  & a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    &:hover {
+      color: #6c2bff;
+    }
+  }
   @media (max-width: 600px) {
     font-size: 1.35rem;
     margin-top: 0.5rem;
@@ -259,6 +272,7 @@ export default function BlogPostPage() {
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchPost() {
@@ -274,6 +288,20 @@ export default function BlogPostPage() {
     if (slug) fetchPost();
   }, [slug]);
 
+  useEffect(() => {
+    if (post && contentRef.current) {
+      const links = contentRef.current.querySelectorAll('a');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        // Check if it's an external link
+        if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer'); // Important for security
+        }
+      });
+    }
+  }, [post]);
+
   if (loading) return <PostWrap>Loading...</PostWrap>;
   if (!post) return <PostWrap>Not found.</PostWrap>;
 
@@ -282,7 +310,9 @@ export default function BlogPostPage() {
       <StickyHeader>
         <HeaderContent>
           <HeaderSpacer />
-          <HeaderName>Harsha Arimanda</HeaderName>
+          <HeaderName>
+            <Link href="/">Harsha Arimanda</Link>
+          </HeaderName>
           <ContactHeaderBtn href="mailto:arimandaharsha@outlook.com">
             <FaEnvelope style={{ fontSize: '1.1em' }} /> Contact
           </ContactHeaderBtn>
@@ -303,7 +333,7 @@ export default function BlogPostPage() {
       >
         <Meta>
           <AuthorAvatar src="/harsha-image.jpeg" alt="Harsha Arimanda" />
-          <AuthorName>{post.author}</AuthorName>
+          <AuthorName href="/">{post.author}</AuthorName>
           {new Date(post.created_at).toLocaleDateString()}
         </Meta>
       </motion.div>
@@ -321,7 +351,7 @@ export default function BlogPostPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
       >
-        <Content dangerouslySetInnerHTML={{ __html: post.content }} />
+        <Content ref={contentRef} dangerouslySetInnerHTML={{ __html: post.content }} />
       </motion.div>
       <ContactCardSection>
         <ContactCard
