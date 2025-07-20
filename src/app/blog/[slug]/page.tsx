@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { BlogPost } from '@/types/blog';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaCopy, FaCheck } from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa';
 
 const PostWrap = styled.main`
   max-width: 720px;
@@ -364,7 +364,7 @@ export default function BlogPostPage() {
 
       // Handle code blocks - add copy buttons
       const preElements = contentRef.current.querySelectorAll('pre');
-      preElements.forEach((pre, index) => {
+      preElements.forEach((pre) => {
         // Skip if already processed
         if (pre.parentElement?.classList.contains('code-block-wrapper')) {
           return;
@@ -373,7 +373,7 @@ export default function BlogPostPage() {
         const code = pre.querySelector('code');
         if (code) {
           // Process the code content to handle escape sequences and line breaks
-          let codeContent = code.innerHTML;
+          const codeContent = code.innerHTML;
           
           // Convert HTML entities and escape sequences
           const tempDiv = document.createElement('div');
