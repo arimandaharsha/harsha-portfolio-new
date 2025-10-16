@@ -777,7 +777,7 @@ export default function Home() {
             transition={{ delay: 0.5, duration: 1, ease: 'easeOut' }}
           >
             Delray Beach, FL<br />
-            <a href="mailto:arimandaharsha@outlook.com">arimandaharsha@outlook.com</a> &nbsp;<br />
+            <a href="mailto:arimandaharsha1991@gmail.com">arimandaharsha1991@gmail.com</a> &nbsp;<br />
             {/* <a href="https://arimandaharsha.me" target="_blank" rel="noopener noreferrer">arimandaharsha.me</a><br /> */}
             <a href="https://linkedin.com/in/arimanda-harsha" target="_blank" rel="noopener noreferrer">linkedin.com/in/arimanda-harsha</a> &nbsp;|&nbsp; <a href="https://github.com/arimandaharsha" target="_blank" rel="noopener noreferrer">github.com/arimandaharsha</a>
           </ContactBlock>
@@ -837,7 +837,7 @@ export default function Home() {
             </ProjectCard>
 
             <ProjectCard
-              href="https://github.com/arimandaharsha"
+              href="https://aipptbuilder.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -876,22 +876,27 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <ExperienceHeader>
-                <CompanyName>Self-employed</CompanyName>
+                <CompanyName>Molina Healthcare</CompanyName>
                 <Role>Generative AI Engineer</Role>
-                <Duration>Jan 2023 - Jul 2023</Duration>
+                <Duration>Aug 2024 - Present</Duration>
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Designed and deployed a secure Retrieval Augmented Generation (RAG) chatbot using LLAMA and LangChain to provide instant answers from internal documentation across departments. Integrated enterprise knowledge sources including Confluence, PDF SOPs, and Jira tickets with ChromaDB vector search for semantic retrieval. Reduced employee query resolution time by 60% and improved onboarding efficiency by automating access to tribal knowledge.
+                  • Designed and deployed production grade RAG-powered conversational agents for patient support systems, leveraging LangChain and LlamaIndex to enhance context-aware retrieval.<br />
+                  • Implemented LLM evaluation frameworks for response accuracy, coherence, and compliance using both automated metrics and human feedback loops.<br />
+                  • Developed fine-tuned LLM pipelines (using QLoRA and PEFT) for healthcare document summarization, improving response precision by 30%.<br />
+                  • Integrated AI models into existing systems via FastAPI and secure REST microservices, ensuring HIPAA compliance and low latency inference.<br />
+                  • Collaborated on deploying AI workloads within Azure cloud environments, leveraging AKS for scalable inference.
                 </Description>
                 <TechStack>
-                  <TechTag>LLAMA</TechTag>
                   <TechTag>LangChain</TechTag>
-                  <TechTag>RAG</TechTag>
-                  <TechTag>ChromaDB</TechTag>
-                  <TechTag>Vector Search</TechTag>
-                  <TechTag>Confluence</TechTag>
-                  <TechTag>Jira</TechTag>
+                  <TechTag>LlamaIndex</TechTag>
+                  <TechTag>QLoRA</TechTag>
+                  <TechTag>PEFT</TechTag>
+                  <TechTag>FastAPI</TechTag>
+                  <TechTag>Azure AKS</TechTag>
+                  <TechTag>HIPAA</TechTag>
+                  And more...
                 </TechStack>
               </ExperienceContent>
             </ExperienceCard>
@@ -903,48 +908,31 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <ExperienceHeader>
-                <CompanyName>Self-employed</CompanyName>
-                <Role>Generative AI Engineer</Role>
-                <Duration>Jan 2023 - Jul 2023</Duration>
+                <CompanyName>Tata Capital, India</CompanyName>
+                <Role>Full Stack AI/ML Engineer</Role>
+                <Duration>Sept 2020 - July 2023</Duration>
               </ExperienceHeader>
               <ExperienceContent>
                 <Description>
-                  Built a GenAI content generation engine that creates brand-aligned social media posts, ad copy, and product descriptions using prompt templates and OpenAI&apos;s GPT-4 API. Integrated Canva API and brand style libraries to ensure consistent tone and visuals across marketing channels. Accelerated content production by 400%, allowing marketing teams to launch campaigns faster while maintaining brand consistency.
+                  • Built and maintained AI-driven financial analytics systems, predicting customer churn and credit risk using ML models in TensorFlow and Scikit-learn.<br />
+                  • Led the development of real-time dashboards and APIs for business intelligence using Flask, React.js, and PostgreSQL.<br />
+                  • Deployed deep learning models (CNN, RNN) for fraud detection and document classification, achieving up to 92% F1-score on validation data.<br />
+                  • Designed automated MLOps pipelines integrating MLflow, Airflow, and Docker for continuous model training and deployment.<br />
+                  • Mentored junior developers in ML model design and full-stack integration, improving project delivery timelines by 20%.
                 </Description>
                 <TechStack>
-                  <TechTag>OpenAI GPT-4</TechTag>
-                  <TechTag>Prompt Engineering</TechTag>
-                  <TechTag>Canva API</TechTag>
-                  <TechTag>Brand Alignment</TechTag>
-                  <TechTag>Content Generation</TechTag>
-                  <TechTag>Social Media</TechTag>
-                  <TechTag>Marketing Automation</TechTag>
-                </TechStack>
-              </ExperienceContent>
-            </ExperienceCard>
-
-            <ExperienceCard
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <ExperienceHeader>
-                <CompanyName>Self-employed</CompanyName>
-                <Role>Full Stack Developer</Role>
-                <Duration>Mar 2020 - Jan 2023</Duration>
-              </ExperienceHeader>
-              <ExperienceContent>
-                <Description>
-                  Designed and developed a full stack appointment scheduling system with real-time slot management, allowing users to book, modify, and cancel appointments via a user-friendly React frontend. Implemented back-end APIs using FastAPI with PostgreSQL for time-slot validation, user authentication, and conflict resolution. Built an admin dashboard with role-based access and automated email notifications using SendGrid API. Optimized performance to handle 10k+ appointments/month with minimal latency.
-                </Description>
-                <TechStack>
-                  <TechTag>React</TechTag>
-                  <TechTag>FastAPI</TechTag>
+                  <TechTag>TensorFlow</TechTag>
+                  <TechTag>Scikit-learn</TechTag>
+                  <TechTag>Flask</TechTag>
+                  <TechTag>React.js</TechTag>
+                  <TechTag>REST API</TechTag>
                   <TechTag>PostgreSQL</TechTag>
-                  <TechTag>FullCalendar</TechTag>
-                  <TechTag>SendGrid API</TechTag>
-                  <TechTag>Authentication</TechTag>
+                  <TechTag>CNN</TechTag>
+                  <TechTag>RNN</TechTag>
+                  <TechTag>MLflow</TechTag>
+                  <TechTag>Airflow</TechTag>
+                  <TechTag>Docker</TechTag>
+                  And more...
                 </TechStack>
               </ExperienceContent>
             </ExperienceCard>
@@ -1132,7 +1120,7 @@ export default function Home() {
             </ContactSub>
             <ContactActions>
               <ContactBtn
-                href="mailto:arimandaharsha@outlook.com"
+                href="mailto:arimandaharsha1991@gmail.com"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >

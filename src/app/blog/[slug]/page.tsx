@@ -478,7 +478,7 @@ export default function BlogPostPage() {
           <HeaderName>
             <Link href="/">Harsha Arimanda</Link>
           </HeaderName>
-          <ContactHeaderBtn href="mailto:arimandaharsha@outlook.com">
+          <ContactHeaderBtn href="mailto:arimandaharsha1991@gmail.com">
             <FaEnvelope style={{ fontSize: '1.1em' }} /> Contact
           </ContactHeaderBtn>
         </HeaderContent>
@@ -533,7 +533,7 @@ export default function BlogPostPage() {
             </ContactSub>
             <ContactActions>
               <ContactBtn
-                href="mailto:arimandaharsha@outlook.com"
+                href="mailto:arimandaharsha1991@gmail.com"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >
